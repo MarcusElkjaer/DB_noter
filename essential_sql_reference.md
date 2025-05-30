@@ -2,6 +2,24 @@
 
 A comprehensive yet succinct field manual for everyday relational‑database tasks. In addition to the core syntax, this edition supplies practical context, guidance on when *not* to apply a command, and illustrative mini‑scenarios. All examples assume a PostgreSQL‑style dialect unless otherwise noted.
 
+
+## Table of Contents
+1. [General Conventions](#general-conventions)
+2. [Data Query Language (DQL)](#1-data-query-language-dql)
+3. [Data Manipulation Language (DML)](#2-data-manipulation-language-dml)
+4. [Data Definition Language (DDL)](#3-data-definition-language-ddl)
+5. [Transaction Control Language (TCL)](#4-transaction-control-language-tcl)
+6. [Data Control Language (DCL)](#5-data-control-language-dcl)
+7. [Diagnostic & Maintenance Aids](#6-diagnostic--maintenance-aids)
+8. [Practical Rules of Thumb](#practical-rules-of-thumb)
+9. [SQL Command Categories](#-sql-command-categories-overview)
+10. [Example SQL Snippets](#-create-table--syntax--constraints)
+11. [Advanced SQL Essentials](#-advanced-sql-essentials--annotated-reference)
+12. [Entity-Relationship Diagrams](#-entity-relationship-e-r-diagrams--explained-simply)
+13. [Query Optimization](#-query-optimization--simple-explanation-with-examples)
+14. [Indexing & Hashing](#-indexing--hashing--beginners-guide-with-clear-examples)
+15. [Summary of Key Concepts](#-summary-of-key-concepts)
+
 ---
 
 ## General Conventions
@@ -16,6 +34,12 @@ A comprehensive yet succinct field manual for everyday relational‑database tas
 ---
 
 ## 1 · Data Query Language (DQL)
+
+Data Query Language statements read data without modifying it. Use these queries to retrieve, filter, and combine information from tables or views.
+
+```sql
+SELECT first_name, last_name FROM employees;
+```
 
 ### 1.1 SELECT
 
@@ -207,6 +231,12 @@ GROUP BY customer_id;
 ---
 
 ## 2 · Data Manipulation Language (DML)
+Data Manipulation Language commands change the contents of tables. Use them for inserting new rows, updating existing ones, or removing unwanted data.
+
+```sql
+INSERT INTO audit_log(message) VALUES ('system started');
+```
+
 
 ### 2.1 INSERT
 
@@ -267,6 +297,12 @@ TRUNCATE TABLE audit_log RESTART IDENTITY;
 ---
 
 ## 3 · Data Definition Language (DDL)
+Data Definition Language statements create, modify, or remove database objects such as tables and indexes.
+
+```sql
+CREATE TABLE demo(id INT PRIMARY KEY);
+```
+
 
 ### 3.1 CREATE / DROP DATABASE
 
@@ -344,6 +380,14 @@ DROP VIEW active_customers;
 ---
 
 ## 4 · Transaction Control Language (TCL)
+Transaction Control Language manages logical units of work. These commands allow you to commit or roll back groups of statements, ensuring atomicity.
+
+```sql
+BEGIN;
+-- statements
+COMMIT;
+```
+
 
 ### 4.1 BEGIN TRANSACTION
 
@@ -372,6 +416,12 @@ COMMIT;                   -- persist debit only
 ---
 
 ## 5 · Data Control Language (DCL)
+Data Control Language governs permissions. Use it to grant or revoke user access to specific tables or entire databases.
+
+```sql
+GRANT SELECT ON employees TO hr_reader;
+```
+
 
 ### 5.1 GRANT
 
@@ -390,6 +440,12 @@ REVOKE INSERT ON products FROM reporting_user;
 ---
 
 ## 6 · Diagnostic & Maintenance Aids
+Diagnostic and maintenance commands help inspect the state of the database and keep it running efficiently.
+
+```sql
+EXPLAIN SELECT * FROM orders WHERE id = 1;
+```
+
 
 ### 6.1 `EXPLAIN` / `EXPLAIN ANALYZE`
 
@@ -420,6 +476,8 @@ SET  statement_timeout = '5s';
 ---
 
 ## Practical Rules of Thumb
+Quick reminders for day-to-day SQL work.
+
 
 1. **Index sensibly** – Cover frequent predicates but weigh against slower writes.
 2. **Guard production** – Run ad‑hoc `UPDATE`/`DELETE` in a transaction and confirm `SELECT COUNT(*)` first.
@@ -432,6 +490,8 @@ SET  statement_timeout = '5s';
 
 
 ## 🧾 SQL Command Categories (Overview)
+Overview of how different SQL statements fit into broad categories.
+
 
 ```sql
 -- SQL Command Categories
